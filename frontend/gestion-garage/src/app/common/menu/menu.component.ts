@@ -1,6 +1,7 @@
-import { Component } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { AuthService } from '../../user/service/auth.service';
 import { Router } from '@angular/router';
+import { IUser } from '../../user/models/User';
 
 @Component({
   selector: 'app-menu',
@@ -9,7 +10,7 @@ import { Router } from '@angular/router';
   styleUrl: './menu.component.css'
 })
 export class MenuComponent {
-
+  @Input()  user: IUser | null = null;
   constructor(
     private authService:AuthService,
     private router: Router

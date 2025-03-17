@@ -1,12 +1,14 @@
 const mongoose = require('mongoose');
+const User = require('./User');
 
 const appointmentSchema = new mongoose.Schema({
   user: {
-    type: User,
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'User',
     required: true,
   },
   vehicle: {
-    type: String, 
+    type: String,
     required: true,
   },
   appointmentDateTime: {
@@ -19,11 +21,16 @@ const appointmentSchema = new mongoose.Schema({
   },
   status: {
     type: String,
-    enum: ['Scheduled', 'In Progress', 'Completed', 'Cancelled'], 
+    enum: ['Scheduled', 'In Progress', 'Completed', 'Cancelled'],
     default: 'Scheduled',
-  }
+  },
+  mechanic: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'User',
+    required: false,
+  },
 }, {
-  timestamps: true, 
+  timestamps: true,
 });
 
 module.exports = mongoose.model('Appointment', appointmentSchema);

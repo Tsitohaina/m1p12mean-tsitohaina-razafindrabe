@@ -3,6 +3,7 @@
         <a href="/">Garage 2025</a>
     </div>
     <ul class="nav-links">
+        <li>{{user?.name}}</li>
         <li><a routerLink="/appointment">Rendez-vous</a></li>
         <li><a (click)="logout()">Se déconnecter</a></li>
     </ul>

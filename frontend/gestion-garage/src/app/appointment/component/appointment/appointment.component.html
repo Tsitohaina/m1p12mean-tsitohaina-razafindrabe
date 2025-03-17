@@ -1,0 +1,32 @@
+<app-menu [user]="user"></app-menu>
+<div class="appointment-container">
+    <h2>Prendre un Rendez-vous</h2>
+    <form (ngSubmit)="submitAppointment()" class="appointment-form" #appointmentForm="ngForm">
+        <div class="form-group">
+            <label for="car">Marque et modèle de voiture</label>
+            <input type="text" id="car" [(ngModel)]="appointment.vehicle" name="car"
+                placeholder="Entrez la marque et le modèle" required #car="ngModel">
+            <div *ngIf="car.invalid && car.touched" class="error-message">Le champ est requis</div>
+        </div>
+
+        <div class="form-group">
+            <label for="service">Sélectionner un service</label>
+            <select id="service" [(ngModel)]="appointment.serviceType" name="service" required #service="ngModel">
+                <option value="oilChange">Changement d'huile</option>
+                <option value="tireChange">Changement de pneus</option>
+                <option value="maintenance">Entretien général</option>
+            </select>
+            <div *ngIf="service.invalid && service.touched" class="error-message">Le service est requis</div>
+        </div>
+
+        <div class="form-group">
+            <label for="appointmentDate">Sélectionner la date</label>
+            <input type="datetime-local" id="appointmentDate" [(ngModel)]="appointment.date" name="appointmentDate"
+                required #date="ngModel">
+            <div *ngIf="date.invalid && date.touched" class="error-message">La date est requise</div>
+        </div>
+
+        <button type="submit" class="btn-submit" [disabled]="appointmentForm.invalid">Confirmer le Rendez-vous</button>
+    </form>
+</div>
+<app-footer></app-footer>

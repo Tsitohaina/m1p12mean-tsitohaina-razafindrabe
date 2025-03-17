@@ -4,25 +4,41 @@
             <h1>Créer un compte</h1>
             <p>Remplissez le formulaire pour vous inscrire.</p>
         </div>
-        <form class="form">
+        <form class="form" (ngSubmit)="save()" [formGroup]="userForm">
             <div class="input-group">
                 <label for="name">Nom</label>
-                <input type="text" id="name" name="name" placeholder="Entrez votre nom" required>
+                <input type="text" id="name" name="name" formControlName="name" class="form-control"
+                    placeholder="Entrez votre nom" required>
             </div>
             <div class="input-group">
                 <label for="email">Email</label>
-                <input type="email" id="email" name="email" placeholder="Entrez votre email" required>
+                <input type="email" id="email" name="email" formControlName="mail" class="form-control"
+                    placeholder="Entrez votre email" required>
+            </div>
+            <div class="input-group">
+                <label for="email">Numéro de téléphone</label>
+                <input type="text" id="mobil" formControlName="mobil" class="form-control"
+                    placeholder="Entrez votre numéro" required>
+            </div>
+            <div class="input-group">
+                <label for="role">Rôle</label>
+                <select id="role" formControlName="role" class="form-control" required>
+                    <option value="client">Client</option>
+                    <option value="mécanicien">Mécanicien</option>
+                    <option value="manager">Manager</option>
+                </select>
             </div>
             <div class="input-group">
                 <label for="password">Mot de passe</label>
-                <input type="password" id="password" name="password" placeholder="Choisissez un mot de passe" required>
+                <input type="password" id="password" formControlName="password" class="form-control"
+                    placeholder="Choisissez un mot de passe" required>
             </div>
             <div class="input-group">
                 <label for="confirmPassword">Confirmer le mot de passe</label>
-                <input type="password" id="confirmPassword" name="confirmPassword"
+                <input type="password" id="confirmPassword" formControlName="confirmPassword"
                     placeholder="Confirmez le mot de passe" required>
             </div>
-            <button type="submit" class="btn primary">S'inscrire</button>
+            <button type="submit" class="btn btn-primary" [disabled]="userForm.invalid">Créer utilisateur</button>
         </form>
         <div class="form-footer">
             <p>Vous avez déjà un compte ? <a [routerLink]="'/login'">Connectez-vous ici</a></p>
