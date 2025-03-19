@@ -7,6 +7,7 @@ import { MenuComponent } from '../../../common/menu/menu.component';
 import { IUser } from '../../../user/models/User';
 import { AppointmentService } from '../../service/appointment.service';
 import { Appointment } from '../../models/Appointment';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-appointment',
@@ -18,16 +19,25 @@ import { Appointment } from '../../models/Appointment';
 export class AppointmentComponent implements OnInit {
   appointment : Appointment;
   user: IUser;
-  constructor(private appointmentService: AppointmentService) {}
+ 
+  constructor(private appointmentService: AppointmentService,private toastr: ToastrService) {}
   
   ngOnInit(): void {
     const userData =  localStorage.getItem('user');
     if (userData) {
       try {
+        console.log(JSON.parse(userData));
         this.user = JSON.parse(userData);
-        if(this.user) this.appointment.user = this.user;
+        this.appointment = {
+          user: this.user, 
+          vehicle: '',
+          appointmentDateTime: new Date(),
+          serviceType: 'Changement d\'huile', 
+          status: 'Planifié',
+          date: new Date(),
+        };
         console.log(this.user);
-        
+       
       } catch (error) {
         console.error('Erreur de parsing JSON :', error);
       }
@@ -35,15 +45,18 @@ export class AppointmentComponent implements OnInit {
   }
 
   submitAppointment(): void {
-    /*this.appointmentService.createAppointment(this.appointment).subscribe(
-      (response) => {
+    console.log("createAppointment");
+    console.log(this.appointment);
+    this.appointmentService.createAppointment(this.appointment).subscribe({
+      next: (response) =>{
         console.log('Rendez-vous créé:', response);
-        alert('Rendez-vous confirmé!');
+        this.toastr.success('Rendez-vous confirmé!');
       },
-      (error) => {
+      error:(error) => {
+        console.log(error);
         console.error('Erreur lors de la création du rendez-vous:', error);
-        alert('Une erreur s\'est produite. Veuillez réessayer.');
+        this.toastr.error('Une erreur s\'est produite. Veuillez réessayer.');
       }
-    );*/
+    });
   }
 }

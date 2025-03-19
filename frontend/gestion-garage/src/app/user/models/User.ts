@@ -16,6 +16,7 @@ export interface IManagedMechanic {
   
  
 export interface IUser {
+    _id: string;
     name: string;
     mail: string;
     mobil: string;

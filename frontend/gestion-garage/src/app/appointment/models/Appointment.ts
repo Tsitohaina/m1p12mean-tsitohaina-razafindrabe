@@ -9,4 +9,4 @@ export interface Appointment {
     status: 'Planifié' | 'En cours' | 'Terminé' | 'Annulé';
     mechanic?: string;
     date:Date;
-  }
+}

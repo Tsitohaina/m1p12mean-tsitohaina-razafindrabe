@@ -14,7 +14,7 @@ mongoose.connect(process.env.MONGO_URI, {
   .catch(err => console.log(err));
 
 app.use('/user', require('./routes/UserRoutes'));
-
+app.use('/appointment', require('./routes/AppointmentRoutes'));
 
 app.listen(PORT, () => console.log(`Serveur démarré sur le port 
 ${PORT}`)); 
