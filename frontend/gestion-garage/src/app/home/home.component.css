@@ -1,0 +1,132 @@
+/* styles.css */
+body {
+    font-family: 'Poppins', sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f4f4f4;
+    text-align: center;
+    color: #333;
+}
+
+.banner {
+    background: linear-gradient(135deg, rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.3)), url('https://source.unsplash.com/1600x900/?car,garage') no-repeat center center/cover;
+    color: white;
+    padding: 120px 20px;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 70vh;
+}
+
+.banner h1 {
+    font-size: 3.8rem;
+    font-weight: bold;
+    margin-bottom: 10px;
+    animation: fadeIn 1s ease-in-out;
+}
+
+.banner p {
+    font-size: 1.6rem;
+    max-width: 800px;
+    margin: 0 auto 20px;
+    animation: slideIn 1s ease-in-out 0.5s forwards;
+}
+
+button {
+    background: linear-gradient(135deg, #ff914d, #ff6b6b);
+    color: white;
+    border: none;
+    padding: 14px 28px;
+    font-size: 1.2rem;
+    cursor: pointer;
+    transition: background 0.3s, transform 0.2s;
+    border-radius: 50px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+}
+
+button:hover {
+    background: linear-gradient(135deg, #ff6b6b, #e63946);
+    transform: scale(1.1);
+}
+
+
+
+.services {
+    padding: 70px 20px;
+    background: white;
+}
+
+.service-list {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 25px;
+}
+
+.service-card {
+    background: white;
+    padding: 30px;
+    border-radius: 15px;
+    width: 30%;
+    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+    animation: zoomIn 0.5s ease-in-out;
+    text-align: left;
+}
+
+.service-card h3 {
+    color: #ff6b6b;
+    font-size: 1.5rem;
+    margin-bottom: 10px;
+}
+
+.service-card:hover {
+    transform: translateY(-10px) scale(1.05);
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+}
+
+.appointment-section {
+    padding: 60px 20px;
+    background: linear-gradient(135deg, #222, #444);
+    color: white;
+    text-align: center;
+}
+
+
+
+/* Angular animations */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+
+    to {
+        opacity: 1;
+    }
+}
+
+@keyframes slideIn {
+    from {
+        transform: translateY(-20px);
+        opacity: 0;
+    }
+
+    to {
+        transform: translateY(0);
+        opacity: 1;
+    }
+}
+
+@keyframes zoomIn {
+    from {
+        transform: scale(0.9);
+        opacity: 0;
+    }
+
+    to {
+        transform: scale(1);
+        opacity: 1;
+    }
+}

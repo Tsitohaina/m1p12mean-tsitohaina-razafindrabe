@@ -1,23 +1,27 @@
+<app-menu [user]="user"></app-menu>
 <div *ngIf="show" class="container">
     <div class="form-wrapper">
         <div class="form-header">
             <h1>Bienvenue</h1>
             <p>Connectez-vous ou souscrivez pour commencer.</p>
         </div>
-        <form class="form">
+        <form class="form" [formGroup]="userForm">
             <div class="input-group">
                 <label for="email">Email</label>
-                <input type="email" id="mail" [(ngModel)]="mail" name="mail" placeholder="Entrez votre email" required>
+                <input type="email" id="mail" formControlName="mail" name="mail" placeholder="Entrez votre email"
+                    required>
             </div>
             <div class="input-group">
                 <label for="password">Mot de passe</label>
-                <input type="password" id="password" [(ngModel)]="password" name="password"
+                <input type="password" id="password" formControlName="password" name="password"
                     placeholder="Entrez votre mot de passe" required>
             </div>
-            <button type="button" class="btn primary" (click)="login()">Se connecter</button>
+            <button type="button" class="btn primary" (click)="login()" [disabled]="userForm.invalid">Se
+                connecter</button>
         </form>
         <div class="form-footer">
             <p>Pas encore inscrit ? <a [routerLink]="'/subscription'">Souscrire ici</a></p>
         </div>
     </div>
 </div>
+<app-footer></app-footer>

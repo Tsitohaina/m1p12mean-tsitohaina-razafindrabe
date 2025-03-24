@@ -3,18 +3,30 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, RouterModule } from '@angular/router';
 import { AuthService } from '../../service/auth.service';
 import {  FormGroup, FormBuilder, Validators,FormsModule,ReactiveFormsModule   } from '@angular/forms';
-import { ToastrService } from 'ngx-toastr';
+import { ToastrModule, ToastrService } from 'ngx-toastr';
 import { Router } from '@angular/router';
+import { FooterComponent } from '../../../common/footer/footer.component';
+import { MenuComponent } from '../../../common/menu/menu.component';
+import { IUser } from '../../models/User';
+
 
 @Component({
   selector: 'app-subscription',
   standalone: true,
-  imports: [CommonModule, RouterModule,FormsModule,ReactiveFormsModule ],
+  imports: [
+    CommonModule, 
+    RouterModule,
+    FormsModule,
+    ReactiveFormsModule,
+    ToastrModule,
+    FooterComponent,
+    MenuComponent],
   templateUrl: './subscription.component.html',
   styleUrl: './subscription.component.css',
 })
 export class SubscriptionComponent {
   userForm: FormGroup;
+  user: IUser;
   constructor(
     private authService:AuthService,
     private router: Router,
@@ -26,8 +38,6 @@ export class SubscriptionComponent {
 
   ngOnInit(): void {
     if (this.authService.isAuthenticated()) {
-
-
       this.router.navigate(['/appointment']);
     }
     this.userForm = this.formBuilder.group({

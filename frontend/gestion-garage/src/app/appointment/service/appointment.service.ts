@@ -15,7 +15,7 @@ export class AppointmentService {
     return this.http.post(`${this.apiUrl}/save`, appointment);
   }
 
-  findById(userId:string){
+  findById(userId:string): Observable<any>{
     return this.http.get(`${this.apiUrl}/findByUserId/${userId}`);
   }
 }

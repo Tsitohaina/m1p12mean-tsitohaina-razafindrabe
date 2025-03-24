@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormsModule } from '@angular/forms';
+import { FormControl, FormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { FooterComponent } from '../../../common/footer/footer.component';
@@ -8,25 +8,40 @@ import { IUser } from '../../../user/models/User';
 import { AppointmentService } from '../../service/appointment.service';
 import { Appointment } from '../../models/Appointment';
 import { ToastrService } from 'ngx-toastr';
+import { UserService } from '../../../user/service/user.service';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatOptionModule } from '@angular/material/core';
+import { MatAutocompleteModule } from '@angular/material/autocomplete';
+import { map, Observable, startWith } from 'rxjs';
+import { ReactiveFormsModule } from '@angular/forms'; 
+
 
 @Component({
   selector: 'app-appointment',
   standalone : true,
-  imports: [CommonModule, RouterModule,FormsModule,FooterComponent,MenuComponent],
+  imports: [CommonModule,
+    RouterModule,FormsModule,FooterComponent,MenuComponent,
+    MatFormFieldModule,
+    MatOptionModule,MatAutocompleteModule,ReactiveFormsModule],
   templateUrl: './appointment.component.html',
   styleUrl: './appointment.component.css'
 })
 export class AppointmentComponent implements OnInit {
   appointment : Appointment;
   user: IUser;
- 
-  constructor(private appointmentService: AppointmentService,private toastr: ToastrService) {}
+  mechanics:IUser[] = []; 
+  filteredMechanics:Observable<IUser[]>;
+  searchMechanic: string = ''; 
+  userControl = new FormControl('');
+  constructor(
+    private appointmentService: AppointmentService,
+    private toastr: ToastrService,
+    private userService:UserService,) {}
   
   ngOnInit(): void {
     const userData =  localStorage.getItem('user');
     if (userData) {
       try {
-        console.log(JSON.parse(userData));
         this.user = JSON.parse(userData);
         this.appointment = {
           user: this.user, 
@@ -36,20 +51,26 @@ export class AppointmentComponent implements OnInit {
           status: 'Planifié',
           date: new Date(),
         };
-        console.log(this.user);
-       
       } catch (error) {
         console.error('Erreur de parsing JSON :', error);
       }
+      this.findUserByRole();
     }
   }
 
+  selectUser(event: any) {
+      this.mechanics.forEach((element:IUser) => {
+        if (element.name == event) {
+          console.log(element);
+          this.appointment.mechanic = element;
+        }
+      });
+  }
+  
+
   submitAppointment(): void {
-    console.log("createAppointment");
-    console.log(this.appointment);
     this.appointmentService.createAppointment(this.appointment).subscribe({
       next: (response) =>{
-        console.log('Rendez-vous créé:', response);
         this.toastr.success('Rendez-vous confirmé!');
       },
       error:(error) => {
@@ -59,4 +80,49 @@ export class AppointmentComponent implements OnInit {
       }
     });
   }
+
+  onMechanicSelected(event: any): void {
+    const selectedMechanicName = event.option.value;
+    const selectedMechanic = this.mechanics.find(mechanic => mechanic.name === selectedMechanicName);
+    if (selectedMechanic) {
+      this.appointment.mechanic = selectedMechanic; 
+    }
+  }
+
+
+  findUserByRole(){
+    this.userService.findUserByRole('mécanicien').subscribe({
+      next: (response) =>{
+        this.mechanics = response;
+        this.toastr.success('Rendez-vous confirmé!');
+      },
+      error:(error) => {
+        console.log(error);
+        console.error('ERROR', error);
+      }
+    });
+  }
+
+  getlistUser() {
+    this.userService.findUserByRole('mécanicien').subscribe({
+      next: (data) =>{
+        if (data.result) {
+          this.mechanics = data;
+          this.filteredMechanics = this.userControl.valueChanges.pipe(
+            startWith(''),
+            map((value: any) => this._filter(value || ''))
+          );
+        } else {
+          console.log(data.message);
+        }
+      },
+      error:(error) => {
+        console.log(error);
+      }
+    });
+  }
+  private _filter(arg0: any): any {
+    throw new Error('Method not implemented.');
+  }
+
 }

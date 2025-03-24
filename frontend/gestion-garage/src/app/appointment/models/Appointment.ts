@@ -7,6 +7,6 @@ export interface Appointment {
     appointmentDateTime: string | Date; 
     serviceType: 'Changement d\'huile' | 'Changement de pneus' | 'Entretien général';
     status: 'Planifié' | 'En cours' | 'Terminé' | 'Annulé';
-    mechanic?: string;
+    mechanic?: IUser;
     date:Date;
 }

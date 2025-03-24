@@ -1,122 +1,120 @@
 * {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+.container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+}
+
+.form-wrapper {
+  background: #ffffff;
+  padding: 40px;
+  border-radius: 10px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  width: 100%;
+  max-width: 400px;
+  text-align: center;
+}
+
+.form-header h1 {
+  font-size: 32px;
+  font-weight: 600;
+  color: #2e3b4e;
+}
+
+.form-header p {
+  font-size: 16px;
+  color: #7c8b98;
+  margin-top: 10px;
+}
+
+.form {
+  margin-top: 30px;
+}
+
+.input-group {
+  margin-bottom: 20px;
+  text-align: left;
+}
+
+.input-group label {
+  display: block;
+  font-size: 14px;
+  font-weight: 500;
+  color: #555;
+}
+
+.input-group input {
+  width: 100%;
+  padding: 12px;
+  margin-top: 5px;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  font-size: 16px;
+  transition: border-color 0.3s ease;
+}
+
+.input-group input:focus {
+  border-color: #4CAF50;
+  outline: none;
+}
+
+
+button {
+  background: linear-gradient(135deg, #ff914d, #ff6b6b);
+  color: white;
+  border: none;
+  padding: 14px 28px;
+  font-size: 1.2rem;
+  cursor: pointer;
+  transition: background 0.3s, transform 0.2s;
+  border-radius: 50px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+  transition: background-color 0.3s ease;
+}
+
+button:hover {
+  background: linear-gradient(135deg, #ff6b6b, #e63946);
+}
+
+button:disabled {
+  background: #ccc;
+  cursor: not-allowed;
+  box-shadow: none;
+  transform: none;
+}
+
+.form-footer {
+  margin-top: 20px;
+  font-size: 14px;
+  color: #777;
+}
+
+.form-footer a {
+  color: #ff6b6b;
+  text-decoration: none;
+}
+
+.form-footer a:hover {
+  text-decoration: underline;
+}
+
+@media (max-width: 480px) {
+  .form-wrapper {
+    padding: 20px;
+    max-width: 90%;
   }
 
-  .container {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100%;
-  }
-  
-  /* Wrapper de formulaire */
-  .form-wrapper {
-    background: #ffffff;
-    padding: 40px;
-    border-radius: 10px;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-    width: 100%;
-    max-width: 400px;
-    text-align: center;
-  }
-  
-  /* En-tête du formulaire */
   .form-header h1 {
-    font-size: 32px;
-    font-weight: 600;
-    color: #2e3b4e;
+    font-size: 28px;
   }
-  
+
   .form-header p {
-    font-size: 16px;
-    color: #7c8b98;
-    margin-top: 10px;
-  }
-  
-  /* Formulaire */
-  .form {
-    margin-top: 30px;
-  }
-  
-  /* Groupes d'inputs */
-  .input-group {
-    margin-bottom: 20px;
-    text-align: left;
-  }
-  
-  .input-group label {
-    display: block;
     font-size: 14px;
-    font-weight: 500;
-    color: #555;
   }
-  
-  .input-group input {
-    width: 100%;
-    padding: 12px;
-    margin-top: 5px;
-    border: 1px solid #ddd;
-    border-radius: 8px;
-    font-size: 16px;
-    transition: border-color 0.3s ease;
-  }
-  
-  .input-group input:focus {
-    border-color: #4CAF50;
-    outline: none;
-  }
-  
-  /* Bouton principal */
-  .btn {
-    width: 100%;
-    padding: 12px;
-    border: none;
-    border-radius: 8px;
-    font-size: 16px;
-    font-weight: 600;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
-  }
-  
-  .primary {
-    background-color: #4CAF50;
-    color: white;
-  }
-  
-  .primary:hover {
-    background-color: #45a049;
-  }
-  
-  /* Footer du formulaire */
-  .form-footer {
-    margin-top: 20px;
-    font-size: 14px;
-    color: #777;
-  }
-  
-  .form-footer a {
-    color: #4CAF50;
-    text-decoration: none;
-  }
-  
-  .form-footer a:hover {
-    text-decoration: underline;
-  }
-  
-  /* Responsive */
-  @media (max-width: 480px) {
-    .form-wrapper {
-      padding: 20px;
-      max-width: 90%;
-    }
-  
-    .form-header h1 {
-      font-size: 28px;
-    }
-  
-    .form-header p {
-      font-size: 14px;
-    }
-  }
+}

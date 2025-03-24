@@ -1,4 +1,22 @@
-<nav class="navbar">
+<nav *ngIf="pageDisplay" class="navbar">
+    <ul>
+        <li><a [routerLink]="'/home'">Accueil</a></li>
+        <li><a [routerLink]="'/home'">Nos Services</a></li>
+        <li><a [routerLink]="'/home'">À Propos</a></li>
+        <li><a [routerLink]="'/home'">Contact</a></li>
+        <li *ngIf="userData" class="auth-buttons">
+            <button (click)="logout()">Se déconnecter</button>
+        </li>
+        <li *ngIf="!userData && show" class="auth-buttons">
+            <button routerLink="/login">Se connecter</button>
+            <button routerLink="/subscription">S'inscrire</button>
+        </li>
+    </ul>
+</nav>
+
+
+
+<!--<nav class="navbar">
     <div class="logo">
         <a href="/">Garage 2025</a>&nbsp;
         <a [routerLink]="'/customer/list-appointment'">Mes rendez-vous</a>
@@ -6,6 +24,6 @@
     <ul class="nav-links">
         <li><span class="user-name">{{user.name}}</span></li>
         <li><a [routerLink]="'/customer/appointment'" class="nav-item">Rendez-vous</a></li>
-        <li><a (click)="logout()" class="nav-item">Se déconnecter</a></li>
+        <li><a  class="nav-item">Se déconnecter</a></li>
     </ul>
-</nav>
+</nav>-->

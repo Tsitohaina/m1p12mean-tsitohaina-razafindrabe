@@ -18,8 +18,8 @@ router.post('/save', async (req, res) => {
 router.get('/findByUserId/:userId', async (req, res) => {
     const userId = req.params.userId;
     try {
-        const appointments = await Appointment.findOne({ user: userId });
-        if (!appointments || appointments.length === 0) {
+        const appointments = await Appointment.find({ user: userId });
+        if (appointments.length === 0) {
             return res.status(404).json({ message: "Aucun rendez-vous trouvé." });
         }
         res.status(200).json(appointments);
