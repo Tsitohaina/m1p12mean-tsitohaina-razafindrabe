@@ -29,4 +29,20 @@ router.get('/findByUserId/:userId', async (req, res) => {
     }
 });
 
+router.get('/findByMechanicId/:mechanicId', async (req, res) => {
+    const mechanicId = req.params.mechanicId;
+    try {
+        const appointments = await Appointment.find({ mechanic: mechanicId }).populate('user', 'name mail mobil');
+
+        if (appointments.length === 0) {
+            return res.status(404).json({ message: "Aucun rendez-vous trouvé pour ce mécanicien." });
+        }
+
+        res.status(200).json(appointments);
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ message: "Erreur serveur lors de la récupération des rendez-vous." });
+    }
+});
+
 module.exports = router;

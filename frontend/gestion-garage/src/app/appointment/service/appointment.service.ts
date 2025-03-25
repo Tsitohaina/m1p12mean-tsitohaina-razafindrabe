@@ -18,4 +18,8 @@ export class AppointmentService {
   findById(userId:string): Observable<any>{
     return this.http.get(`${this.apiUrl}/findByUserId/${userId}`);
   }
+
+  findByMechanicId(userId:string): Observable<any>{
+    return this.http.get(`${this.apiUrl}/findByMechanicId/${userId}`);
+  }
 }

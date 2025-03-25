@@ -34,9 +34,9 @@ export class AuthService {
   }
   redirectionUserRole(user:IUser){
     console.log(user.role);
-    if(user.role == "client") this.router.navigate(['customer/appointment']);
-    else if(user.role == "mécanicien") this.router.navigate(['mechanic/appointment']);
-    else if(user.role == "manager") this.router.navigate(['manager/appointment']);
+    if(user.role == "client") this.router.navigate(['/customer/appointment']);
+    else if(user.role == "mécanicien") this.router.navigate(['/mechanic/appointment']);
+    else if(user.role == "manager") this.router.navigate(['/manager/appointment']);
   }
 
 }

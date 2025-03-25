@@ -27,6 +27,8 @@ export class ListAppointmentComponent  implements OnInit {
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
   appointments: Appointment[] = [];
+  todayAppointments: Appointment[] = [];
+  allAppointments:Appointment[] = [];
   user: IUser;
   constructor(
     private appointmentService: AppointmentService,
@@ -36,20 +38,8 @@ export class ListAppointmentComponent  implements OnInit {
     if (userData) {
       try {
         this.user = JSON.parse(userData);
-        this.appointmentService.findById(this.user._id).subscribe({
-          next: (response) =>{
-            console.log(response);
-            this.dataSource.data = response;
-            console.log(typeof response);
-          },
-          error:(error) => {
-            console.log(error);
-            console.log(error.error);
-            console.error('Erreur lors de la création du rendez-vous:', error);
-            this.toastr.error(error.error.message);
-          }
-        });
-
+        if(this.user.role == 'mécanicien')this.listAppointmentMechanic();
+        else this.listAppointmentCustomer(); 
       }catch (error) {
         console.error('Erreur de parsing JSON :', error);
       }
@@ -61,6 +51,48 @@ export class ListAppointmentComponent  implements OnInit {
   }
   pageEvent(event: any): void {
     
+  }
+
+  listAppointmentCustomer(){
+    this.appointmentService.findById(this.user._id).subscribe({
+      next: (response) =>{
+        console.log(response);
+        this.dataSource.data = response;
+        console.log(typeof response);
+      },
+      error:(error) => {
+        console.log(error);
+        console.log(error.error);
+        console.error('Erreur lors de la création du rendez-vous:', error);
+        this.toastr.error(error.error.message);
+      }
+    });
+  }
+
+  listAppointmentMechanic(){
+    this.appointmentService.findByMechanicId(this.user._id).subscribe({
+      next: (response) =>{
+        console.log(response);
+        this.dataSource.data = response;
+        this.listAppointement();
+      },
+      error:(error) => {
+        console.log(error);
+        console.log(error.error);
+        console.error('Erreur lors de la création du rendez-vous:', error);
+        this.toastr.error(error.error.message);
+      }
+    });
+  }
+  listAppointement(){
+    const today = new Date();
+    today.setUTCHours(0, 0, 0, 0);
+    this.todayAppointments = this.listAppointments.filter(app => {
+      const appointmentDate = new Date(app.appointmentDateTime);
+      appointmentDate.setUTCHours(0, 0, 0, 0);
+      return appointmentDate.getTime() === today.getTime() && app.status === "Planifié";
+    });
+    this.allAppointments = this.listAppointments.filter(app => app.status === "Planifié");
   }
 
   ngAfterViewInit() {

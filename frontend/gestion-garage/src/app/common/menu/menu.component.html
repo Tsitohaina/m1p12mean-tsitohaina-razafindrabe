@@ -3,7 +3,7 @@
         <li><a [routerLink]="'/home'">Accueil</a></li>
         <li><a [routerLink]="'/home'">Nos Services</a></li>
         <li><a [routerLink]="'/home'">À Propos</a></li>
-        <li><a [routerLink]="'/home'">Contact</a></li>
+        <li *ngIf="userData"><a [routerLink]="'/customer/list-appointment'">Mes rendez-vous</a></li>
         <li *ngIf="userData" class="auth-buttons">
             <button (click)="logout()">Se déconnecter</button>
         </li>

@@ -23,13 +23,11 @@ export class MenuComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    if (typeof localStorage !== 'undefined') {
+    if(this.authService.isAuthenticated()){
       this.userData =  localStorage.getItem('user');
-      if( this.router.url.includes("login") ||  this.router.url.includes("subscription"))
-      this.show = false;
-      this.pageDisplay = true;
+      if( this.router.url.includes("login") ||  this.router.url.includes("subscription")) {this.show = false;}
     }
-   
+    this.pageDisplay = true;
   }
   logout(){
     console.log('test');

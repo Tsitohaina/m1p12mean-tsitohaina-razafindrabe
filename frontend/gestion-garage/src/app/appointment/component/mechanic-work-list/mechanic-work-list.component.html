@@ -1,1 +1,16 @@
-<p>mechanic-work-list works!</p>
+<app-menu [user]="user"></app-menu>
+<section class="dashboard">
+    <div class="stat-card" @zoomIn>
+        <h2>📅 Rendez-vous aujourd’hui</h2>
+        <p>{{todayAppointments.length}}</p>
+    </div>
+    <div class="stat-card" @zoomIn>
+        <h2>🚗 Tous les rendez-vous</h2>
+        <p>{{allAppointments.length}}</p>
+    </div>
+    <div class="stat-card" @zoomIn>
+        <h2>📝 Factures en attente</h2>
+        <p>3</p>
+    </div>
+</section>
+<app-footer></app-footer>

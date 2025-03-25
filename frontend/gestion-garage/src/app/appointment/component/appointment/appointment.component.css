@@ -1,6 +1,6 @@
 .appointment-container {
     max-width: 600px;
-    margin: 50px auto 50px;
+    margin: 150px auto 50px;
     padding: 10px 40px 40px 40px;
     background-color: #f5f5f5;
     border-radius: 15px;
@@ -8,7 +8,6 @@
     font-family: 'Roboto', sans-serif;
     animation: fadeIn 1s ease-in-out;
 }
-
 
 h2 {
     text-align: center;
@@ -23,7 +22,6 @@ p {
     font-size: 16px;
     margin-bottom: 30px;
 }
-
 
 .form-group {
     margin-bottom: 25px;
@@ -58,24 +56,29 @@ select:focus {
 button {
     width: 100%;
     padding: 14px;
-    background-color: #1a73e8;
-    border: none;
-    border-radius: 10px;
+    background: linear-gradient(135deg, #ff914d, #ff6b6b);
     color: white;
-    font-size: 18px;
+    border: none;
+    padding: 14px 28px;
+    font-size: 1.2rem;
     cursor: pointer;
-    transition: all 0.3s ease;
+    transition: background 0.3s, transform 0.2s;
+    border-radius: 50px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+    transition: background-color 0.3s ease;
 }
 
 button:hover {
-    background-color: #1a73e8;
-    transform: scale(1.05);
+    background: linear-gradient(135deg, #ff6b6b, #e63946);
 }
 
 button:disabled {
-    background-color: #9cc7ff;
+    background: #ccc;
     cursor: not-allowed;
+    box-shadow: none;
+    transform: none;
 }
+
 
 .error-message {
     color: #d9534f;

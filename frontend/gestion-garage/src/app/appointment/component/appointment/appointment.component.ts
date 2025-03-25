@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormsModule } from '@angular/forms';
-import { RouterModule } from '@angular/router';
+import { Router, RouterModule } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { FooterComponent } from '../../../common/footer/footer.component';
 import { MenuComponent } from '../../../common/menu/menu.component';
@@ -14,6 +14,7 @@ import { MatOptionModule } from '@angular/material/core';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { map, Observable, startWith } from 'rxjs';
 import { ReactiveFormsModule } from '@angular/forms'; 
+import { MatInputModule } from '@angular/material/input';
 
 
 @Component({
@@ -22,7 +23,7 @@ import { ReactiveFormsModule } from '@angular/forms';
   imports: [CommonModule,
     RouterModule,FormsModule,FooterComponent,MenuComponent,
     MatFormFieldModule,
-    MatOptionModule,MatAutocompleteModule,ReactiveFormsModule],
+    MatOptionModule,MatAutocompleteModule,ReactiveFormsModule,MatInputModule ],
   templateUrl: './appointment.component.html',
   styleUrl: './appointment.component.css'
 })
@@ -36,7 +37,8 @@ export class AppointmentComponent implements OnInit {
   constructor(
     private appointmentService: AppointmentService,
     private toastr: ToastrService,
-    private userService:UserService,) {}
+    private userService:UserService,
+    private router: Router) {}
   
   ngOnInit(): void {
     const userData =  localStorage.getItem('user');
@@ -55,6 +57,7 @@ export class AppointmentComponent implements OnInit {
         console.error('Erreur de parsing JSON :', error);
       }
       this.findUserByRole();
+      this.getlistUser();
     }
   }
 
@@ -72,6 +75,7 @@ export class AppointmentComponent implements OnInit {
     this.appointmentService.createAppointment(this.appointment).subscribe({
       next: (response) =>{
         this.toastr.success('Rendez-vous confirmé!');
+        this.router.navigate(['/customer/list-appointment']);
       },
       error:(error) => {
         console.log(error);
@@ -94,7 +98,8 @@ export class AppointmentComponent implements OnInit {
     this.userService.findUserByRole('mécanicien').subscribe({
       next: (response) =>{
         this.mechanics = response;
-        this.toastr.success('Rendez-vous confirmé!');
+        //this.filteredMechanics.   = this.mechanics;
+        console.log(this.mechanics);
       },
       error:(error) => {
         console.log(error);
@@ -106,7 +111,8 @@ export class AppointmentComponent implements OnInit {
   getlistUser() {
     this.userService.findUserByRole('mécanicien').subscribe({
       next: (data) =>{
-        if (data.result) {
+        console.log(data);
+        if (data) {
           this.mechanics = data;
           this.filteredMechanics = this.userControl.valueChanges.pipe(
             startWith(''),
@@ -121,8 +127,11 @@ export class AppointmentComponent implements OnInit {
       }
     });
   }
-  private _filter(arg0: any): any {
-    throw new Error('Method not implemented.');
+  private _filter(value: string): IUser[] {
+    const filterValue = value.toLowerCase();
+    return this.mechanics.filter((user) =>
+      user.name.toLowerCase().includes(filterValue)
+    );
   }
 
 }

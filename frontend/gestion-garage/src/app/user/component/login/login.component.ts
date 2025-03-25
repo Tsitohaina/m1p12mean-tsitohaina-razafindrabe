@@ -14,7 +14,11 @@ import {  FormGroup, FormBuilder, Validators,FormsModule,ReactiveFormsModule   }
 @Component({
   selector: 'app-login',
   standalone:true,
-  imports: [CommonModule, RouterModule,FormsModule,ReactiveFormsModule,ToastrModule,FooterComponent,MenuComponent],
+  imports: [CommonModule, 
+    RouterModule,
+    FormsModule,
+    ReactiveFormsModule,
+    ToastrModule,FooterComponent,MenuComponent],
   providers: [provideAnimations()],
   templateUrl: './login.component.html',
   styleUrl: './login.component.css',
@@ -36,13 +40,21 @@ export class LoginComponent implements OnInit {
 
   ngOnInit(): void {
     if (this.authService.isAuthenticated()) {
-      this.router.navigate(['/appointment']);
-    }else{
-      this.userForm = this.formBuilder.group({
-        mail: ['', [Validators.required, Validators.email]],
-        password: ['', Validators.required]
-      });
+      //this.router.navigate(['/appointment']);
+      const userData =  localStorage.getItem('user');
+      if (userData) {
+        try {
+          this.user = JSON.parse(userData);
+          this.authService.redirectionUserRole(this.user);
+        } catch (error) {
+          console.error('Erreur de parsing JSON :', error);
+        }
+      }
     }
+    this.userForm = this.formBuilder.group({
+      mail: ['', [Validators.required, Validators.email]],
+      password: ['', Validators.required]
+    });
     this.show=true;
   }
 
