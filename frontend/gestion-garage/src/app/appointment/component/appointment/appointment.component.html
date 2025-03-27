@@ -20,16 +20,16 @@
         </div>
         <div class="form-group">
             <label for="appointmentDate">Sélectionner la date</label>
-            <input type="datetime-local" id="appointmentDate" [(ngModel)]="appointment.date" name="appointmentDate"
-                required #date="ngModel">
+            <input type="datetime-local" id="appointmentDate" [(ngModel)]="appointment.appointmentDateTime"
+                name="appointmentDate" required #date="ngModel">
             <div *ngIf="date.invalid && date.touched" class="error-message">Date requise</div>
         </div>
 
         <div class="form-group">
-            <mat-form-field class="example-full-width">
-                <mat-label>Mécanicien (facultatif)</mat-label>
+            <mat-form-field appearance="fill" class="full-width-form-field">
+                <label for="mechanic">Mécanicien (facultatif)</label>
                 <input type="text" matInput [formControl]="userControl" [matAutocomplete]="auto"
-                    placeholder="Rechercher un mécanicien">
+                    placeholder="Rechercher un mécanicien" name="mechanic">
                 <mat-autocomplete #auto="matAutocomplete" (optionSelected)='selectUser($event.option.value)'>
                     <mat-option [value]="null">--</mat-option>
                     <mat-option *ngFor="let user of filteredMechanics | async" [value]="user.name">

@@ -4,6 +4,7 @@ import { Router } from '@angular/router';
 import { IUser } from '../../user/models/User';
 import { RouterModule } from '@angular/router';
 import { CommonModule } from '@angular/common';
+import { F } from '@angular/cdk/a11y-module.d-7d03e079';
 
 @Component({
   selector: 'app-menu',
@@ -33,5 +34,11 @@ export class MenuComponent implements OnInit {
     console.log('test');
     this.authService.logout();
     this.router.navigate(['']);
+  }
+  toList(){
+    if(this.user){
+      if(this.user.role == 'mécanicien') this.router.navigate(['/mechanic/list-appointment']);
+      else this.router.navigate(['/customer/list-appointment']);
+    }
   }
 }

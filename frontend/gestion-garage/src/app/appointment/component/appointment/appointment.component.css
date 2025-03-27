@@ -98,3 +98,17 @@ button:disabled {
         transform: translateY(0);
     }
 }
+
+
+::ng-deep .mdc-text-field--filled:not(.mdc-text-field--disabled) {
+    background-color: #f5f5f5 !important;
+    border-color: #f5f5f5 !important;
+}
+
+.container {
+    width: 100%;
+}
+
+.full-width-form-field {
+    width: 100%;
+}

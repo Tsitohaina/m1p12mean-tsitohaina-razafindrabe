@@ -12,24 +12,36 @@ import { MatTableDataSource, MatTableModule } from '@angular/material/table';
 import { MatPaginator, MatPaginatorModule } from '@angular/material/paginator';
 import { MatSort, MatSortModule } from '@angular/material/sort';
 import { MatInputModule } from '@angular/material/input';
+import { MatSelectModule } from '@angular/material/select';
 
 @Component({
   selector: 'app-list-appointment',
   standalone : true,
-  imports: [CommonModule, RouterModule,FormsModule,FooterComponent,MenuComponent,MatTableModule,MatPaginatorModule,MatSortModule,MatInputModule],
+  imports: [
+    CommonModule, 
+    RouterModule,
+    FormsModule,
+    FooterComponent,
+    MenuComponent,
+    MatTableModule,
+    MatPaginatorModule,
+    MatSortModule,
+    MatInputModule,
+    MatSelectModule],
   templateUrl: './list-appointment.component.html',
   styleUrl: './list-appointment.component.css'
 })
 export class ListAppointmentComponent  implements OnInit {
-  displayedColumns: string[] = [ 'createdAt', 'serviceType','vehicle','status']; 
+  displayedColumns: string[] = [ 'createdAt' ,'serviceType','vehicle','appointmentDateTime','mechanic','status','statusModif']; 
   dataSource = new MatTableDataSource<Appointment>(); 
-
+  statusList: string[] = ['Planifié','Annulé'];
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
   appointments: Appointment[] = [];
   todayAppointments: Appointment[] = [];
   allAppointments:Appointment[] = [];
   user: IUser;
+  hoverText:boolean=false;
   constructor(
     private appointmentService: AppointmentService,
     private toastr: ToastrService){}
@@ -38,10 +50,9 @@ export class ListAppointmentComponent  implements OnInit {
     if (userData) {
       try {
         this.user = JSON.parse(userData);
-        if(this.user.role == 'mécanicien')this.listAppointmentMechanic();
-        else this.listAppointmentCustomer(); 
+        this.listAppointmentCustomer(); 
       }catch (error) {
-        console.error('Erreur de parsing JSON :', error);
+        console.error('Erreur:', error);
       }
     }
   }
@@ -53,12 +64,18 @@ export class ListAppointmentComponent  implements OnInit {
     
   }
 
+  onMouseEnter() {
+    this.hoverText = true; 
+  }
+  onMouseLeave() {
+    this.hoverText = false; 
+  }
+
   listAppointmentCustomer(){
     this.appointmentService.findById(this.user._id).subscribe({
       next: (response) =>{
-        console.log(response);
         this.dataSource.data = response;
-        console.log(typeof response);
+        console.log( response);
       },
       error:(error) => {
         console.log(error);
@@ -69,34 +86,44 @@ export class ListAppointmentComponent  implements OnInit {
     });
   }
 
-  listAppointmentMechanic(){
-    this.appointmentService.findByMechanicId(this.user._id).subscribe({
-      next: (response) =>{
-        console.log(response);
-        this.dataSource.data = response;
-        this.listAppointement();
-      },
-      error:(error) => {
-        console.log(error);
-        console.log(error.error);
-        console.error('Erreur lors de la création du rendez-vous:', error);
-        this.toastr.error(error.error.message);
-      }
-    });
-  }
+  
   listAppointement(){
     const today = new Date();
     today.setUTCHours(0, 0, 0, 0);
-    this.todayAppointments = this.listAppointments.filter(app => {
+    this.todayAppointments = this.dataSource.data.filter(app => {
       const appointmentDate = new Date(app.appointmentDateTime);
       appointmentDate.setUTCHours(0, 0, 0, 0);
       return appointmentDate.getTime() === today.getTime() && app.status === "Planifié";
     });
-    this.allAppointments = this.listAppointments.filter(app => app.status === "Planifié");
+    this.allAppointments = this.dataSource.data.filter(app => app.status === "Planifié");
   }
 
   ngAfterViewInit() {
     this.dataSource.paginator = this.paginator; 
     this.dataSource.sort = this.sort; 
+  }
+
+  onStatusChange(element: Appointment): void {
+    console.log('Statut modifié pour l\'élément:', element);
+    let id =  element._id || "";
+    console.log(id);
+    console.log(element.status);
+    this.appointmentService.updateAppointment(id,element.status).subscribe({
+      next: (response) =>{
+        this.listAppointement();
+      },
+      error:(error) => {
+        console.log(error);
+        console.log(error.error);
+        console.error('Erreur ', error);
+        this.toastr.error(error.error.message);
+      }
+    });
+  }
+
+  isCreationDateInTheFuture(createdAt: string): boolean {
+    const creationDate = new Date(createdAt);
+    const currentDate = new Date();
+    return creationDate > currentDate;
   }
 }

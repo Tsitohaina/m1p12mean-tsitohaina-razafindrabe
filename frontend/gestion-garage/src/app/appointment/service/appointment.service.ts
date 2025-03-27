@@ -22,4 +22,10 @@ export class AppointmentService {
   findByMechanicId(userId:string): Observable<any>{
     return this.http.get(`${this.apiUrl}/findByMechanicId/${userId}`);
   }
+
+  updateAppointment(id:string,status:string): Observable<any> {
+    const data = {status:status};
+    return this.http.put(`${this.apiUrl}/updateStatus/${id}`, data);
+  }
+
 }

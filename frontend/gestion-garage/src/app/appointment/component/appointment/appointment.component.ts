@@ -45,13 +45,14 @@ export class AppointmentComponent implements OnInit {
     if (userData) {
       try {
         this.user = JSON.parse(userData);
+        console.log(this.user);
+        if(this.user.role == "mécanicien") this.router.navigate(['/mechanic/appointment']);
         this.appointment = {
           user: this.user, 
           vehicle: '',
           appointmentDateTime: new Date(),
           serviceType: 'Changement d\'huile', 
-          status: 'Planifié',
-          date: new Date(),
+          status: 'Planifié'
         };
       } catch (error) {
         console.error('Erreur de parsing JSON :', error);
@@ -98,7 +99,6 @@ export class AppointmentComponent implements OnInit {
     this.userService.findUserByRole('mécanicien').subscribe({
       next: (response) =>{
         this.mechanics = response;
-        //this.filteredMechanics.   = this.mechanics;
         console.log(this.mechanics);
       },
       error:(error) => {

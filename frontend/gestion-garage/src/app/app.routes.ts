@@ -1,5 +1,6 @@
 import { Routes } from '@angular/router';
 import { AppointmentComponent } from './appointment/component/appointment/appointment.component';
+import { ListAppointmentMechanicComponent } from './appointment/component/list-appointment-mechanic/list-appointment-mechanic.component';
 import { ListAppointmentComponent } from './appointment/component/list-appointment/list-appointment.component';
 import { MechanicWorkListComponent } from './appointment/component/mechanic-work-list/mechanic-work-list.component';
 import { AuthGuard } from './guard/auth.guard';
@@ -12,6 +13,7 @@ export const routes: Routes = [
   {path: 'home', component: HomeComponent },
   {path:'customer/appointment',component: AppointmentComponent, canActivate: [AuthGuard] },
   {path:'customer/list-appointment',component: ListAppointmentComponent, canActivate: [AuthGuard] },
+  {path:'mechanic/list-appointment',component: ListAppointmentMechanicComponent, canActivate: [AuthGuard] },
   {path:'mechanic/appointment',component: MechanicWorkListComponent, canActivate: [AuthGuard] },
   {path:'manager/appointment',component: AppointmentComponent, canActivate: [AuthGuard] },
   {path:'appointment', component: AppointmentComponent, canActivate: [AuthGuard]  },

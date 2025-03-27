@@ -29,6 +29,10 @@ const appointmentSchema = new mongoose.Schema({
     ref: 'User',
     required: false,
   },
+  observation: {
+    type: String,
+    required: false,
+  },
 }, {
   timestamps: true,
 });

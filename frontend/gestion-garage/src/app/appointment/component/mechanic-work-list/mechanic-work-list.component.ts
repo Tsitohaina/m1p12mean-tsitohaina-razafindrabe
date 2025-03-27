@@ -1,7 +1,7 @@
 import { animate, style, transition, trigger } from '@angular/animations';
 
 import { CommonModule } from '@angular/common';
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { ToastrModule, ToastrService } from 'ngx-toastr';
 import { FooterComponent } from '../../../common/footer/footer.component';
@@ -28,7 +28,7 @@ import { AppointmentService } from '../../service/appointment.service';
     ])
   ]
 })
-export class MechanicWorkListComponent {
+export class MechanicWorkListComponent  implements OnInit {
   user: IUser;
   listAppointments: Appointment[] = [];
   todayAppointments: Appointment[] = [];

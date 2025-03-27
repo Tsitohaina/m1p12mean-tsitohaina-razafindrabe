@@ -40,7 +40,6 @@ export class LoginComponent implements OnInit {
 
   ngOnInit(): void {
     if (this.authService.isAuthenticated()) {
-      //this.router.navigate(['/appointment']);
       const userData =  localStorage.getItem('user');
       if (userData) {
         try {
@@ -64,11 +63,12 @@ export class LoginComponent implements OnInit {
       this.authService.login(this.userForm.value.mail, this.userForm.value.password).subscribe({
         next: (response) => {
           localStorage.setItem('authToken', response.token);
+          console.log(response.user);
           localStorage.setItem('user', JSON.stringify(response.user));
           this.toastr.success('Connexion réussie!');
-          const returnUrl = this.route.snapshot.queryParams['returnUrl'];
-          if(!returnUrl) this.authService.redirectionUserRole(response.user);
-          else this.router.navigate([returnUrl]);
+          //const returnUrl = this.route.snapshot.queryParams['returnUrl'];
+         this.authService.redirectionUserRole(response.user);
+          //else this.router.navigate([returnUrl]);
         },
         error: (error) => {
           console.error('Erreur lors de la connexion', error);

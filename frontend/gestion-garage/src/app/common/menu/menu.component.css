@@ -17,7 +17,6 @@ button:hover {
 
 .navbar {
     background: rgba(34, 34, 34, 0.95);
-    padding: 15px;
     position: fixed;
     width: 100%;
     top: 0;
@@ -36,6 +35,7 @@ button:hover {
     display: flex;
     gap: 25px;
     width: 100%;
+    cursor: pointer;
 }
 
 .navbar a {
