@@ -7,12 +7,12 @@
 
 
 .container {
-  margin-top: 15px;
-  margin-bottom: 15px;
+  margin: 80px auto 100px;
   display: flex;
   justify-content: center;
   align-items: center;
   height: 100%;
+
 }
 
 

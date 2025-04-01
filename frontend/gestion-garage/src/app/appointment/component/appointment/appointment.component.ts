@@ -57,7 +57,7 @@ export class AppointmentComponent implements OnInit {
       } catch (error) {
         console.error('Erreur de parsing JSON :', error);
       }
-      this.findUserByRole();
+      //this.findUserByRole();
       this.getlistUser();
     }
   }
@@ -92,20 +92,6 @@ export class AppointmentComponent implements OnInit {
     if (selectedMechanic) {
       this.appointment.mechanic = selectedMechanic; 
     }
-  }
-
-
-  findUserByRole(){
-    this.userService.findUserByRole('mécanicien').subscribe({
-      next: (response) =>{
-        this.mechanics = response;
-        console.log(this.mechanics);
-      },
-      error:(error) => {
-        console.log(error);
-        console.error('ERROR', error);
-      }
-    });
   }
 
   getlistUser() {

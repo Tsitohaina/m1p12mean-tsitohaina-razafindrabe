@@ -21,7 +21,7 @@
                 <input type="text" id="mobil" formControlName="mobil" class="form-control"
                     placeholder="Entrez votre numéro" required>
             </div>
-            <div class="input-group">
+            <div class="input-group" *ngIf="showRole">
                 <label for="role">Rôle</label>
                 <select id="role" formControlName="role" class="form-control" required>
                     <option value="client">Client</option>

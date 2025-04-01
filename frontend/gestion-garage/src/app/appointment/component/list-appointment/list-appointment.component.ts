@@ -42,6 +42,9 @@ export class ListAppointmentComponent  implements OnInit {
   allAppointments:Appointment[] = [];
   user: IUser;
   hoverText:boolean=false;
+  total: number = 0;
+  pageSizeOptions: number[] = [];
+  show:boolean =false;
   constructor(
     private appointmentService: AppointmentService,
     private toastr: ToastrService){}
@@ -74,8 +77,24 @@ export class ListAppointmentComponent  implements OnInit {
   listAppointmentCustomer(){
     this.appointmentService.findById(this.user._id).subscribe({
       next: (response) =>{
-        this.dataSource.data = response;
-        console.log( response);
+        this.dataSource = response;
+        this.total = response.length;
+          let size = this.total / 10;
+          let nbpage = '10';
+          if(size > 1){
+            for (let i = 2; i < size + 1; i++) {
+              nbpage += ',';
+              nbpage += (i * 10).toString();
+            }
+          }
+          this.pageSizeOptions = nbpage.split(',').map((str) => +str);
+          if (this.total != 0) {
+            setTimeout(() => {
+              this.dataSource.paginator = this.paginator;
+              this.dataSource.sort = this.sort;
+              this.show = true;
+            });
+          }
       },
       error:(error) => {
         console.log(error);

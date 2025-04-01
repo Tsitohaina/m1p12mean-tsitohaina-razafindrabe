@@ -1,6 +1,6 @@
 <app-menu [user]="user"></app-menu>
 <br>
-<div class="example-container">
+<div *ngIf="show" class="example-container">
     <mat-form-field appearance="outline">
         <mat-label>Rechercher</mat-label>
         <input matInput (keyup)="applyFilter($event)" placeholder="Rechercher">
@@ -57,8 +57,11 @@
         <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
         <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
     </table>
-    <mat-paginator [pageSize]="5" [pageSizeOptions]="[5, 10, 25]" (page)="pageEvent($event)">
-    </mat-paginator>
-
+    <div class="pagination-container">
+        <p class="total-text">Total : {{total}}</p>
+        <mat-paginator [pageSizeOptions]="pageSizeOptions" showFirstLastButtons
+            aria-label="Sélectionner la page des éléments périodiques">
+        </mat-paginator>
+    </div>
 </div>
 <app-footer></app-footer>

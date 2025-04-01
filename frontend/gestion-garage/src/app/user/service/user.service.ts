@@ -12,7 +12,6 @@ export class UserService {
 
   findUserByRole(role:string): Observable<any>{
     const encodedUserId = encodeURIComponent(role);
-    console.log(encodedUserId);
     return this.http.get(`${this.apiUrl}/findUserByRole/${encodedUserId}`);
   }
 }

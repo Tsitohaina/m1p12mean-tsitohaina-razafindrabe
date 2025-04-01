@@ -27,6 +27,20 @@ router.get('/findByUserId/:userId', async (req, res) => {
     }
 });
 
+router.get('/findByStatus/:status', async (req, res) => {
+    const status = req.params.status;
+    try {
+        const appointments = await Appointment.find({ status: status }).populate('mechanic', 'name mail mobil').populate('user', 'name mail mobil');
+        if (appointments.length === 0) {
+            return res.status(404).json({ message: "Aucun rendez-vous trouvé." });
+        }
+        res.status(200).json(appointments);
+    } catch (error) {
+        console.log(error);
+        res.status(500).json({ message: error.message });
+    }
+});
+
 router.get('/findByMechanicId/:mechanicId', async (req, res) => {
     const mechanicId = req.params.mechanicId;
     try {

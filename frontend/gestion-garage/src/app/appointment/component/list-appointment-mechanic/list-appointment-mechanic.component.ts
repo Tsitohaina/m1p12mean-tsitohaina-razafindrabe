@@ -38,11 +38,14 @@ export class ListAppointmentMechanicComponent {
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
   appointments: Appointment[] = [];
-  todayAppointments: Appointment[] = [];
-  allAppointments:Appointment[] = [];
+  //todayAppointments: Appointment[] = [];
+  //allAppointments:Appointment[] = [];
   user: IUser;
   hoverText:boolean=false;
   statusList: string[] = ['Planifié', 'En cours', 'Terminé', 'Annulé'];
+  total: number = 0;
+  pageSizeOptions: number[] = [];
+  show:boolean =false;
   constructor(
     private appointmentService: AppointmentService,
     private toastr: ToastrService){}
@@ -55,6 +58,7 @@ export class ListAppointmentMechanicComponent {
           this.listAppointmentMechanic();
         }catch (error) {
           console.error('Erreur de parsing JSON :', error);
+          this.show = true;
         }
       }
   }
@@ -68,19 +72,35 @@ export class ListAppointmentMechanicComponent {
   listAppointmentMechanic(){
       this.appointmentService.findByMechanicId(this.user._id).subscribe({
         next: (response) =>{
-          console.log(response);
-          this.dataSource.data = response;
-          this.listAppointement();
+          this.dataSource = response;
+          this.total = response.length;
+          let size = this.total / 10;
+          let nbpage = '10';
+          if(size > 1){
+            for (let i = 2; i < size + 1; i++) {
+              nbpage += ',';
+              nbpage += (i * 10).toString();
+            }
+          }
+          this.pageSizeOptions = nbpage.split(',').map((str) => +str);
+          if (this.total != 0) {
+            setTimeout(() => {
+              this.dataSource.paginator = this.paginator;
+              this.dataSource.sort = this.sort;
+              this.show = true;
+            });
+          }
         },
         error:(error) => {
           console.log(error);
           console.log(error.error);
           console.error('Erreur lors de la création du rendez-vous:', error);
           this.toastr.error(error.error.message);
+          this.show = true;
         }
       });
   }
-  listAppointement(){
+  /*listAppointement(){
     const today = new Date();
     today.setUTCHours(0, 0, 0, 0);
     this.todayAppointments = this.dataSource.data.filter(app => {
@@ -89,7 +109,7 @@ export class ListAppointmentMechanicComponent {
       return appointmentDate.getTime() === today.getTime() && app.status === "Planifié";
     });
     this.allAppointments = this.dataSource.data.filter(app => app.status === "Planifié");
-  }
+  }*/
 
   ngAfterViewInit() {
     this.dataSource.paginator = this.paginator; 
@@ -109,7 +129,7 @@ export class ListAppointmentMechanicComponent {
     let id =  element._id || "";
     this.appointmentService.updateAppointment(id, element.status).subscribe({
       next: (response) =>{
-        this.listAppointement();
+        //this.listAppointement();
       },
       error:(error) => {
         console.log(error);

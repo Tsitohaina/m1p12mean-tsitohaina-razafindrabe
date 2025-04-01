@@ -157,3 +157,17 @@ app-footer {
     margin: 0 auto;
     display: block;
 }
+
+.pagination-container {
+    display: flex;
+    justify-content: flex-end;
+    background-color: #f1f1f1;
+    align-items: center;
+    padding: 10px 20px;
+}
+
+.total-text {
+    margin: 0 15px 0 0;
+    font-size: 1rem;
+    color: #333;
+}
