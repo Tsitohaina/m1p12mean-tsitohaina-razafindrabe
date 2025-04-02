@@ -18,10 +18,11 @@ import { IUser } from '../../../user/models/User';
 import { UserService } from '../../../user/service/user.service';
 import { Appointment } from '../../models/Appointment';
 import { AppointmentService } from '../../service/appointment.service';
+import { FilterUsersPipe } from "../../../pipe/filter-users.pipe";
 
 @Component({
   selector: 'app-manager-dashboard',
-  imports: [CommonModule, 
+  imports: [CommonModule,
     RouterModule,
     FormsModule,
     FooterComponent,
@@ -32,8 +33,8 @@ import { AppointmentService } from '../../service/appointment.service';
     MatInputModule,
     MatSortModule,
     MatSelectModule,
-    MatOptionModule,MatAutocompleteModule,
-    ReactiveFormsModule],
+    MatOptionModule, MatAutocompleteModule,
+    ReactiveFormsModule, FilterUsersPipe],
   templateUrl: './manager-dashboard.component.html',
   styleUrl: './manager-dashboard.component.css',
   animations: [
@@ -46,12 +47,10 @@ import { AppointmentService } from '../../service/appointment.service';
   ]
 })
 export class ManagerDashboardComponent implements OnInit {
-  displayedColumns: string[] = [ 'createdAt', 'Client' ,'serviceType','vehicle','appointmentDateTime','status','mechanic']; 
+  displayedColumns: string[] = [ 'createdAt', 'Client' ,'serviceType','vehicle','appointmentDateTime','status','mechanic','assignation']; 
   dataSource = new MatTableDataSource<Appointment>(); 
   user: IUser;
   show:boolean =false;
-  hoverText:boolean=false;
-  hoverTextMechanic:boolean=false;
   statusList: string[] = ['Planifié', 'En cours', 'Terminé', 'Annulé'];
   total: number = 0;
   pageSizeOptions: number[] = [];
@@ -84,7 +83,13 @@ export class ManagerDashboardComponent implements OnInit {
       this.appointmentService.findByStatus('Planifié').subscribe({
         next: (response) =>{
           console.log(response);
-          this.dataSource = response;
+          
+          this.dataSource = response.map((appointment: any) => ({
+            ...appointment,
+            mechanicSearch: ''
+          }));
+          
+
           this.total = response.length;
           let size = this.total / 10;
           let nbpage = '10';
@@ -111,29 +116,6 @@ export class ManagerDashboardComponent implements OnInit {
           this.show = true;
         }
       });
-    }
-    appointments = [
-      { id: 1, title: 'Rendez-vous 1', date: new Date(), assigned: false, assignedUser: null },
-      { id: 2, title: 'Rendez-vous 2', date: new Date(), assigned: false, assignedUser: null },
-      { id: 3, title: 'Rendez-vous 3', date: new Date(), assigned: false, assignedUser: null },
-    ];
-  
-    // Liste des utilisateurs disponibles
-    availableUsers = [
-      { id: 1, name: 'Utilisateur 1' },
-      { id: 2, name: 'Utilisateur 2' },
-      { id: 3, name: 'Utilisateur 3' },
-    ];
-  
-    // Fonction pour assigner un utilisateur à un rendez-vous
-    assignUserToAppointment(appointment: any): void {
-      const user = this.availableUsers.find(user => user.id === appointment.assignedUser);
-      if (user) {
-        appointment.assigned = true;
-        alert(`L'utilisateur ${user.name} a été assigné au rendez-vous ${appointment.title}`);
-      } else {
-        alert('Veuillez sélectionner un utilisateur.');
-      }
     }
     isCreationDateInTheFuture(createdAt: string): boolean {
       const creationDate = new Date(createdAt);
@@ -162,13 +144,37 @@ export class ManagerDashboardComponent implements OnInit {
     selectMechanic(event: any,element:any) {
       console.log(event);
       console.log(element);
-      /*this.mechanics.forEach((element:IUser) => {
-        if (element.name == event) {
-          console.log(element);
-          
+
+      this.appointmentService.updateAppointmentMechnic(element._id, event).subscribe({
+        next: () => {this.listAppointment();this.toastr.success('Mécanicien assigné avec succès !')},
+        error: (error) => {
+          console.error('Erreur lors de l\'assignation:', error);
+          this.toastr.error(error.error.message);
+        }
+      });
+
+
+      /*this.appointmentService.updateAppointmentMechnic(id,element).subscribe({
+        next: (response) =>{
+          this.listAppointment();
+        },
+        error:(error) => {
+          console.log(error);
+          console.log(error.error);
+          console.error('Erreur ', error);
+          this.toastr.error(error.error.message);
         }
       });*/
     }
+
+    onMechanicSearchInput(event: Event, element: any) {
+      const inputElement = event.target as HTMLInputElement;
+      if (inputElement) {
+        element.mechanicSearch = inputElement.value;
+      }
+    }
+    
+    
     getlistUser() {
       this.userService.findUserByRole('mécanicien').subscribe({
         next: (data) =>{
@@ -193,18 +199,5 @@ export class ManagerDashboardComponent implements OnInit {
       return this.mechanics.filter((user) =>
         user.name.toLowerCase().includes(filterValue)
       );
-    }
-
-    onMouseEnter() {
-      this.hoverText = true; 
-    }
-    onMouseLeave() {
-      this.hoverText = false; 
-    }
-    onMouseEnterMechanic() {
-      this.hoverTextMechanic = true; 
-    }
-    onMouseLeaveMechanic() {
-      this.hoverTextMechanic = false; 
     }
 }

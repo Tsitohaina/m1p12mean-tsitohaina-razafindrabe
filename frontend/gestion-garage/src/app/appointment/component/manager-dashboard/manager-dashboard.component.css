@@ -54,6 +54,7 @@ html {
 }
 
 .hover-text {
+    display: none;
     position: absolute;
     top: 80%;
     left: 80%;
@@ -67,7 +68,6 @@ html {
     box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
     pointer-events: none;
     z-index: 10;
-    display: flex;
     align-items: center;
     gap: 8px;
     width: 100%;
@@ -152,6 +152,12 @@ app-footer {
 }
 
 ::ng-deep .mat-mdc-text-field-wrapper {
+    width: 100% !important;
+    margin: 0 auto;
+    display: block;
+}
+
+.search {
     width: 20% !important;
     margin: 0 auto;
     display: block;
@@ -178,4 +184,8 @@ app-footer {
 
 ::ng-deep .mdc-text-field {
     overflow: visible !important;
+}
+
+.mat-mdc-form-field {
+    display: block;
 }

@@ -54,26 +54,6 @@ html {
     transition: box-shadow 0.3s ease-in-out;
 }
 
-.hover-text {
-    position: absolute;
-    top: 80%;
-    left: 80%;
-    transform: translate(-50%, -50%);
-    color: rgb(255, 255, 255);
-    font-size: 14px;
-    font-weight: inherit;
-    background-color: rgb(73, 121, 211);
-    padding-left: 10px;
-    border-radius: 4px;
-    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
-    pointer-events: none;
-    z-index: 10;
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    width: 100%;
-    transition: opacity 0.3s ease, visibility 0.3s ease;
-}
 
 .hover-text ul {
     list-style-type: none;
@@ -172,4 +152,24 @@ app-footer {
     margin: 0 15px 0 0;
     font-size: 1rem;
     color: #333;
+}
+
+.hover-text {
+    display: none;
+    position: absolute;
+    top: 80%;
+    left: 80%;
+    transform: translate(-50%, -50%);
+    color: rgb(255, 255, 255);
+    font-size: 14px;
+    font-weight: inherit;
+    background-color: rgb(73, 121, 211);
+    padding-left: 10px;
+    border-radius: 4px;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
+    pointer-events: none;
+    z-index: 10;
+    align-items: center;
+    gap: 8px;
+    width: 100%;
 }

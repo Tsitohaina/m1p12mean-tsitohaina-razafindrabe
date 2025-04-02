@@ -45,6 +45,7 @@ export class ListAppointmentComponent  implements OnInit {
   total: number = 0;
   pageSizeOptions: number[] = [];
   show:boolean =false;
+  mechanic: IUser;
   constructor(
     private appointmentService: AppointmentService,
     private toastr: ToastrService){}
@@ -67,17 +68,11 @@ export class ListAppointmentComponent  implements OnInit {
     
   }
 
-  onMouseEnter() {
-    this.hoverText = true; 
-  }
-  onMouseLeave() {
-    this.hoverText = false; 
-  }
-
   listAppointmentCustomer(){
     this.appointmentService.findById(this.user._id).subscribe({
       next: (response) =>{
-        this.dataSource = response;
+        console.log(response);
+        this.dataSource = new MatTableDataSource(response);
         this.total = response.length;
           let size = this.total / 10;
           let nbpage = '10';

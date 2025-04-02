@@ -54,25 +54,6 @@ html {
     transition: box-shadow 0.3s ease-in-out;
 }
 
-.hover-text {
-    position: absolute;
-    top: 80%;
-    left: 80%;
-    transform: translate(-50%, -50%);
-    color: rgb(255, 255, 255);
-    font-size: 14px;
-    font-weight: inherit;
-    background-color: rgb(73, 121, 211);
-    padding-left: 10px;
-    border-radius: 4px;
-    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
-    pointer-events: none;
-    z-index: 10;
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    width: 100%;
-}
 
 .hover-text ul {
     list-style-type: none;
@@ -99,6 +80,7 @@ html {
     flex-direction: row;
     align-items: center;
     gap: 5px;
+    color: #f1f1f1;
 }
 
 .mat-form-field {
@@ -170,4 +152,165 @@ app-footer {
     margin: 0 15px 0 0;
     font-size: 1rem;
     color: #333;
+}
+
+
+.hover-text {
+    display: none;
+    position: absolute;
+    top: 80%;
+    left: 80%;
+    transform: translate(-50%, -50%);
+    color: rgb(71, 64, 64);
+    font-size: 14px;
+    font-weight: inherit;
+    background-color: rgb(73, 121, 211);
+    padding-left: 10px;
+    border-radius: 4px;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
+    pointer-events: none;
+    z-index: 10;
+    align-items: center;
+    gap: 8px;
+    width: 100%;
+}
+
+.appointment-section {
+    margin: 10% auto 50px;
+    padding: 20px 10px;
+    color: rgb(22, 21, 21);
+    text-align: center;
+}
+
+.appointment-section button {
+    margin-bottom: 100px;
+    padding-bottom: 10px;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+
+    to {
+        opacity: 1;
+    }
+}
+
+@keyframes slideIn {
+    from {
+        transform: translateY(-20px);
+        opacity: 0;
+    }
+
+    to {
+        transform: translateY(0);
+        opacity: 1;
+    }
+}
+
+@keyframes zoomIn {
+    from {
+        transform: scale(0.9);
+        opacity: 0;
+    }
+
+    to {
+        transform: scale(1);
+        opacity: 1;
+    }
+}
+
+@media (max-width: 600px) {
+    body {
+        font-size: 14px;
+    }
+
+    .banner h1 {
+        font-size: 2.5rem;
+    }
+
+    .banner p {
+        font-size: 1.2rem;
+    }
+
+    .service-list {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .service-card {
+        width: 90%;
+        padding: 20px;
+    }
+
+    .appointment-section {
+        padding: 40px 10px;
+    }
+
+    button {
+        font-size: 1rem;
+        padding: 12px 24px;
+    }
+}
+
+@media (max-width: 1024px) {
+    .banner h1 {
+        font-size: 3rem;
+    }
+
+    .service-card {
+        width: 45%;
+    }
+
+    .appointment-section {
+        padding: 50px 20px;
+    }
+}
+
+@media (min-width: 1200px) {
+    .service-card {
+        width: 30%;
+    }
+}
+
+@media (min-width: 1600px) {
+    .banner h1 {
+        font-size: 4rem;
+    }
+
+    .banner p {
+        font-size: 1.8rem;
+    }
+
+
+}
+
+button {
+    background: linear-gradient(135deg, #ff914d, #ff6b6b);
+    color: white;
+    border: none;
+    padding: 14px 28px;
+    font-size: 1.2rem;
+    cursor: pointer;
+    transition: background 0.3s, transform 0.2s;
+    border-radius: 50px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+}
+
+button:hover {
+    background: linear-gradient(135deg, #ff6b6b, #e63946);
+    transform: scale(1.1);
+}
+
+.add-btn {
+    position: absolute;
+    top: 130px;
+    right: 10px;
+    padding: 12px 25px;
+    border: none;
+    border-radius: 5px;
+    font-size: 16px;
+    cursor: pointer;
+    z-index: 10;
 }

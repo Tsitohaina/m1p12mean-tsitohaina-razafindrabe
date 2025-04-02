@@ -4,6 +4,7 @@ import { ListAppointmentMechanicComponent } from './appointment/component/list-a
 import { ListAppointmentComponent } from './appointment/component/list-appointment/list-appointment.component';
 import { ManagerDashboardComponent } from './appointment/component/manager-dashboard/manager-dashboard.component';
 import { MechanicWorkListComponent } from './appointment/component/mechanic-work-list/mechanic-work-list.component';
+import { PageNotFoundComponent } from './common/page-not-found/page-not-found.component';
 import { AuthGuard } from './guard/auth.guard';
 import { HomeComponent } from './home/home.component';
 import { LoginComponent } from './user/component/login/login.component';
@@ -20,4 +21,6 @@ export const routes: Routes = [
   {path:'appointment', component: AppointmentComponent, canActivate: [AuthGuard]  },
   {path:'login', component: LoginComponent },
   {path:'subscription', component: SubscriptionComponent },
+  { path: '404', component:  PageNotFoundComponent}, 
+  { path: '**', redirectTo: '/404' }
 ];

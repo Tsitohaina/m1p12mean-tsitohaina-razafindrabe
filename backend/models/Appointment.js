@@ -22,7 +22,8 @@ const appointmentSchema = new mongoose.Schema({
   status: {
     type: String,
     enum: ['Planifié', 'En cours', 'Terminé', 'Annulé'],
-    default: 'Scheduled',
+    default: 'Planifié',
+    required: true,
   },
   mechanic: {
     type: mongoose.Schema.Types.ObjectId,

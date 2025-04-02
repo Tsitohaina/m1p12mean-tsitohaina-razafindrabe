@@ -4,6 +4,7 @@
         <mat-label>Rechercher</mat-label>
         <input matInput (keyup)="applyFilter($event)" placeholder="Rechercher">
     </mat-form-field>
+    <button [routerLink]="'/home'" class="add-btn">Créer un rendez-vous</button>
     <table mat-table [dataSource]="dataSource" matSort class="appointment-table">
         <ng-container matColumnDef="createdAt">
             <th mat-header-cell *matHeaderCellDef mat-sort-header>Date de création</th>
@@ -27,13 +28,14 @@
         </ng-container>
         <ng-container matColumnDef="mechanic">
             <th mat-header-cell *matHeaderCellDef mat-sort-header>Mécanicien</th>
-            <td mat-cell *matCellDef="let element" class="mat-column-Client" (mouseenter)="onMouseEnter()"
-                (mouseleave)="onMouseLeave()">
-                {{element.mechanic.name}}
-                <div *ngIf="hoverText" class="hover-text">
+            <td mat-cell *matCellDef="let element" class="mat-column-Client">
+                <span class="mechanic-name">
+                    {{element.mechanic?.name}}
+                </span>
+                <div class="hover-text" *ngIf="element.mechanic?.mobil || element.mechanic?.mail">
                     <ul>
-                        <li><i class="material-icons">phone</i>{{element.mechanic.mobil}}</li>
-                        <li><i class="material-icons">email</i>{{element.mechanic.mail}}</li>
+                        <li><i class="material-icons">phone</i>{{element.mechanic?.mobil}}</li>
+                        <li><i class="material-icons">email</i>{{element.mechanic?.mail}}</li>
                     </ul>
                 </div>
             </td>
@@ -62,5 +64,12 @@
             aria-label="Sélectionner la page des éléments périodiques">
         </mat-paginator>
     </div>
+</div>
+<div class="not-found" *ngIf="!show">
+    <section class="appointment-section">
+        <h2>Prenez rendez-vous facilement 📅</h2>
+        <p>Vous n'avez pas de rendez-vous</p>
+        <button [routerLink]="'/home'">Réserver maintenant</button>
+    </section>
 </div>
 <app-footer></app-footer>

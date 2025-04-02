@@ -34,14 +34,10 @@ import { MatSelectModule } from '@angular/material/select';
 export class ListAppointmentMechanicComponent {
   displayedColumns: string[] = [ 'createdAt', 'Client' ,'serviceType','vehicle','appointmentDateTime','status','statusModif']; 
   dataSource = new MatTableDataSource<Appointment>(); 
-
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
   appointments: Appointment[] = [];
-  //todayAppointments: Appointment[] = [];
-  //allAppointments:Appointment[] = [];
   user: IUser;
-  hoverText:boolean=false;
   statusList: string[] = ['Planifié', 'En cours', 'Terminé', 'Annulé'];
   total: number = 0;
   pageSizeOptions: number[] = [];
@@ -61,12 +57,6 @@ export class ListAppointmentMechanicComponent {
           this.show = true;
         }
       }
-  }
-  onMouseEnter() {
-    this.hoverText = true; 
-  }
-  onMouseLeave() {
-    this.hoverText = false; 
   }
 
   listAppointmentMechanic(){

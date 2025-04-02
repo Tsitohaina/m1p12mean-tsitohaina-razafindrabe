@@ -27,6 +27,12 @@ export class AppointmentService {
     const data = {status:status};
     return this.http.put(`${this.apiUrl}/updateStatus/${id}`, data);
   }
+
+  updateAppointmentMechnic(id:string,event:any): Observable<any> {
+    console.log(event);
+    const data = {mechanic:event};
+    return this.http.put(`${this.apiUrl}/updateMechanic/${id}`, data);
+  }
   findByStatus(status:string): Observable<any>{
     const encodedStatus= encodeURIComponent(status);
     return this.http.get(`${this.apiUrl}/findByStatus/${encodedStatus}`);

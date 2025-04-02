@@ -72,4 +72,26 @@ router.put('/updateStatus/:appointmentId', async (req, res) => {
     }
 });
 
+router.put('/updateMechanic/:appointmentId', async (req, res) => {
+    const appointmentId = req.params.appointmentId;
+    const { mechanic } = req.body;
+    try {
+        console.log('0');
+        console.log(mechanic);
+        console.log('1');
+        const appointment = await Appointment.findById(appointmentId);
+        console.log(appointment);
+        if (!appointment) {
+            return res.status(404).json({ message: 'Rendez-vous non trouvé.' });
+        }
+        appointment.mechanic = mechanic;
+        console.log(appointment);
+        await appointment.save();
+        res.status(200).json(appointment);
+    } catch (error) {
+        console.log(error);
+        res.status(500).json({ message: 'Erreur lors de la mise à jour du statut.' });
+    }
+});
+
 module.exports = router;

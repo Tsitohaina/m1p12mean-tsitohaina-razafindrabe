@@ -34,6 +34,8 @@ export class AppointmentComponent implements OnInit {
   filteredMechanics:Observable<IUser[]>;
   searchMechanic: string = ''; 
   userControl = new FormControl('');
+
+  
   constructor(
     private appointmentService: AppointmentService,
     private toastr: ToastrService,
